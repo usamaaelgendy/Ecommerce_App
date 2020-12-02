@@ -1,15 +1,19 @@
-import 'package:ecommerce_app/constance.dart';
+import 'package:ecommerce_app/view/widgets/custom_buttom.dart';
+import 'package:ecommerce_app/view/widgets/custom_button_social.dart';
 import 'package:ecommerce_app/view/widgets/custom_text.dart';
 import 'package:ecommerce_app/view/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+
+import '../../constance.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.0,
         backgroundColor: Colors.white,
+        elevation: 0.0,
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -66,6 +70,36 @@ class LoginScreen extends StatelessWidget {
               text: 'Forgot Password?',
               fontSize: 14,
               alignment: Alignment.topRight,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            CustomButton(
+              onPress: () {},
+              text: 'SIGN IN',
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            CustomText(
+              text: '-OR-',
+              alignment: Alignment.center,
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            CustomButtonSocial(
+              text: 'Sign In with Facebook',
+              onPress: () {},
+              imageName: 'assets/images/facebook.png',
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            CustomButtonSocial(
+              text: 'Sign In with Google',
+              onPress: () {},
+              imageName: 'assets/images/google.png',
             ),
           ],
         ),

@@ -92,7 +92,9 @@ class LoginScreen extends GetWidget<AuthViewModel> {
             ),
             CustomButtonSocial(
               text: 'Sign In with Facebook',
-              onPress: () {},
+              onPress: () {
+                controller.facebookSignInMethod();
+              },
               imageName: 'assets/images/facebook.png',
             ),
             SizedBox(

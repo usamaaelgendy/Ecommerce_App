@@ -60,5 +60,20 @@
     </array>
     <!-- End of the Google Sign-in Section -->
 
+
+
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb234291428113052</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>234291428113052</string>
+    <key>FacebookDisplayName</key>
+    <string>test</string>
 </dict>
 </plist>

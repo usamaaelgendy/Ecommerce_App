@@ -49,28 +49,15 @@
     <array>
         <dict>
             <key>CFBundleTypeRole</key>
-            <string>Editor</string>
+            <string>E-Commerce</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <!-- TODO Replace this value: -->
-                <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 	            <string>com.googleusercontent.apps.154365471254-s2sp2qvfgr9mu0vic26mfopau23cmhkk</string>
+	            <string>fb234291428113052</string>
             </array>
         </dict>
     </array>
     <!-- End of the Google Sign-in Section -->
-
-
-
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb234291428113052</string>
-      </array>
-      </dict>
-    </array>
     <key>FacebookAppID</key>
     <string>234291428113052</string>
     <key>FacebookDisplayName</key>

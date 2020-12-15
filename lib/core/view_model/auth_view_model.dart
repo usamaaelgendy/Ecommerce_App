@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,10 +9,18 @@ class AuthViewModel extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   FirebaseAuth _auth = FirebaseAuth.instance;
   FacebookLogin _facebookLogin = FacebookLogin();
+
+  String email, password, name;
+
+  Rx<User> _user = Rx<User>();
+
+  String get user => _user.value?.email;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    _user.bindStream(_auth.authStateChanges());
   }
 
   @override
@@ -36,10 +46,7 @@ class AuthViewModel extends GetxController {
       accessToken: googleSignInAuthentication.accessToken,
     );
 
-    UserCredential userCredential =
-        await _auth.signInWithCredential(credential);
-
-    print(userCredential.user);
+    await _auth.signInWithCredential(credential);
   }
 
   void facebookSignInMethod() async {
@@ -51,6 +58,21 @@ class AuthViewModel extends GetxController {
       final faceCredential = FacebookAuthProvider.credential(accessToken);
 
       await _auth.signInWithCredential(faceCredential);
+    }
+  }
+
+  void signInWithEmailAndPassword() async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      Get.offAll(HomeView());
+    } catch (e) {
+      print(e.message);
+      Get.snackbar(
+        'Error login account',
+        e.message,
+        colorText: Colors.black,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

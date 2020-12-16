@@ -1,14 +1,12 @@
 import 'package:ecommerce_app/core/view_model/auth_view_model.dart';
+import 'package:ecommerce_app/view/auth/login_view.dart';
 import 'package:ecommerce_app/view/widgets/custom_buttom.dart';
-import 'package:ecommerce_app/view/widgets/custom_button_social.dart';
 import 'package:ecommerce_app/view/widgets/custom_text.dart';
 import 'package:ecommerce_app/view/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../constance.dart';
-
-class LoginScreen extends GetWidget<AuthViewModel> {
+class RegisterView extends GetWidget<AuthViewModel> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -18,6 +16,14 @@ class LoginScreen extends GetWidget<AuthViewModel> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
+        leading: GestureDetector(
+            onTap: () {
+              Get.off(LoginView());
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -29,27 +35,24 @@ class LoginScreen extends GetWidget<AuthViewModel> {
           key: _formKey,
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: "Welcome,",
-                    fontSize: 30,
-                  ),
-                  CustomText(
-                    text: "Sign Up",
-                    color: primaryColor,
-                    fontSize: 18,
-                  ),
-                ],
+              CustomText(
+                text: "Sign Up,",
+                fontSize: 30,
               ),
               SizedBox(
-                height: 10,
+                height: 30,
               ),
-              CustomText(
-                text: 'Sign in to Continue',
-                fontSize: 14,
-                color: Colors.grey,
+              CustomTextFormField(
+                text: 'Name',
+                hint: 'Pesa',
+                onSave: (value) {
+                  controller.name = value;
+                },
+                validator: (value) {
+                  if (value == null) {
+                    print("ERROR");
+                  }
+                },
               ),
               SizedBox(
                 height: 30,
@@ -82,14 +85,6 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                 },
               ),
               SizedBox(
-                height: 20,
-              ),
-              CustomText(
-                text: 'Forgot Password?',
-                fontSize: 14,
-                alignment: Alignment.topRight,
-              ),
-              SizedBox(
                 height: 15,
               ),
               CustomButton(
@@ -97,37 +92,13 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                   _formKey.currentState.save();
 
                   if (_formKey.currentState.validate()) {
-                    controller.signInWithEmailAndPassword();
+                    controller.createAccountWithEmailAndPassword();
                   }
                 },
-                text: 'SIGN IN',
+                text: 'SIGN Up',
               ),
               SizedBox(
                 height: 40,
-              ),
-              CustomText(
-                text: '-OR-',
-                alignment: Alignment.center,
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              CustomButtonSocial(
-                text: 'Sign In with Facebook',
-                onPress: () {
-                  controller.facebookSignInMethod();
-                },
-                imageName: 'assets/images/facebook.png',
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              CustomButtonSocial(
-                text: 'Sign In with Google',
-                onPress: () {
-                  controller.googleSignInMethod();
-                },
-                imageName: 'assets/images/google.png',
               ),
             ],
           ),

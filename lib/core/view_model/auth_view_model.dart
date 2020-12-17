@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/core/service/firestore_user.dart';
+import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,10 @@ class AuthViewModel extends GetxController {
       accessToken: googleSignInAuthentication.accessToken,
     );
 
-    await _auth.signInWithCredential(credential);
+    await _auth.signInWithCredential(credential).then((user) {
+      saveUser(user);
+      Get.offAll(HomeView());
+    });
   }
 
   void facebookSignInMethod() async {
@@ -57,7 +62,9 @@ class AuthViewModel extends GetxController {
     if (result.status == FacebookLoginStatus.loggedIn) {
       final faceCredential = FacebookAuthProvider.credential(accessToken);
 
-      await _auth.signInWithCredential(faceCredential);
+      await _auth.signInWithCredential(faceCredential).then((user) async {
+        saveUser(user);
+      });
     }
   }
 
@@ -78,8 +85,11 @@ class AuthViewModel extends GetxController {
 
   void createAccountWithEmailAndPassword() async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((user) async {
+        saveUser(user);
+      });
 
       Get.offAll(HomeView());
     } catch (e) {
@@ -91,5 +101,14 @@ class AuthViewModel extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+  }
+
+  void saveUser(UserCredential user) async {
+    await FireStoreUser().addUserToFireStore(UserModel(
+      userId: user.user.uid,
+      email: user.user.email,
+      name: name == null ? user.user.displayName : name,
+      pic: '',
+    ));
   }
 }

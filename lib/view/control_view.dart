@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/core/view_model/auth_view_model.dart';
-import 'package:ecommerce_app/core/view_model/home_view_model.dart';
+import 'package:ecommerce_app/core/view_model/control_view_model.dart';
 import 'package:ecommerce_app/view/auth/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ class ControlView extends GetWidget<AuthViewModel> {
     return Obx(() {
       return (Get.find<AuthViewModel>().user == null)
           ? LoginView()
-          : GetBuilder<HomeViewModel>(
+          : GetBuilder<ControlViewModel>(
               builder: (controller) => Scaffold(
                 body: controller.currentScreen,
                 bottomNavigationBar: bottomNavigationBar(),
@@ -20,8 +20,8 @@ class ControlView extends GetWidget<AuthViewModel> {
   }
 
   Widget bottomNavigationBar() {
-    return GetBuilder<HomeViewModel>(
-      init: HomeViewModel(),
+    return GetBuilder<ControlViewModel>(
+      init: ControlViewModel(),
       builder: (controller) => BottomNavigationBar(
         items: [
           BottomNavigationBarItem(

@@ -1,35 +1,44 @@
-import 'package:ecommerce_app/view/cart_view.dart';
-import 'package:ecommerce_app/view/home_view.dart';
-import 'package:ecommerce_app/view/profile_view.dart';
-import 'package:flutter/material.dart';
+import 'package:ecommerce_app/core/service/home_services.dart';
+import 'package:ecommerce_app/model/category_model.dart';
+import 'package:ecommerce_app/model/product_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class HomeViewModel extends GetxController {
-  int _navigatorValue = 0;
+  ValueNotifier<bool> get loading => _loading;
+  ValueNotifier<bool> _loading = ValueNotifier(false);
 
-  get navigatorValue => _navigatorValue;
+  List<CategoryModel> get categoryModel => _categoryModel;
+  List<CategoryModel> _categoryModel = [];
 
-  Widget currentScreen = HomeView();
+  List<ProductModel> get productModel => _productModel;
+  List<ProductModel> _productModel = [];
 
-  void changeSelectedValue(int selectedValue) {
-    _navigatorValue = selectedValue;
-    switch (selectedValue) {
-      case 0:
-        {
-          currentScreen = HomeView();
-          break;
-        }
-      case 1:
-        {
-          currentScreen = CartView();
-          break;
-        }
-      case 2:
-        {
-          currentScreen = ProfileView();
-          break;
-        }
-    }
-    update();
+  HomeViewModel() {
+    getCategory();
+    getBestSellingProducts();
+  }
+
+  getCategory() async {
+    _loading.value = true;
+    HomeService().getCategory().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        _categoryModel.add(CategoryModel.fromJson(value[i].data()));
+        _loading.value = false;
+      }
+      update();
+    });
+  }
+
+  getBestSellingProducts() async {
+    _loading.value = true;
+    HomeService().getBestSelling().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        _productModel.add(ProductModel.fromJson(value[i].data()));
+        _loading.value = false;
+      }
+      print(_productModel.length);
+      update();
+    });
   }
 }

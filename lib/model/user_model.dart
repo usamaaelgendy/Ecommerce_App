@@ -7,7 +7,6 @@ class UserModel {
     if (map == null) {
       return;
     }
-
     userId = map['userId'];
     email = map['email'];
     name = map['name'];

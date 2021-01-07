@@ -3,14 +3,13 @@ import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthViewModel extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   FirebaseAuth _auth = FirebaseAuth.instance;
-  FacebookLogin _facebookLogin = FacebookLogin();
 
   String email, password, name;
 
@@ -55,17 +54,14 @@ class AuthViewModel extends GetxController {
   }
 
   void facebookSignInMethod() async {
-    FacebookLoginResult result = await _facebookLogin.logIn(['email']);
+    final AccessToken result = await FacebookAuth.instance.login();
 
-    final accessToken = result.accessToken.token;
+    final FacebookAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(result.token);
 
-    if (result.status == FacebookLoginStatus.loggedIn) {
-      final faceCredential = FacebookAuthProvider.credential(accessToken);
-
-      await _auth.signInWithCredential(faceCredential).then((user) async {
-        saveUser(user);
-      });
-    }
+    await _auth.signInWithCredential(facebookAuthCredential).then((user) {
+      saveUser(user);
+    });
   }
 
   void signInWithEmailAndPassword() async {

@@ -15,8 +15,8 @@ dependencies:
   google_sign_in: ^4.5.6
   firebase_core: "0.5.3"
   firebase_auth: "^0.18.4"
-  flutter_facebook_login: ^3.0.0
   cloud_firestore: "^0.14.4"
+  flutter_facebook_auth: "^1.0.0"
 
 dev_dependencies:
   build_runner: ^1.10.0
@@ -29,4 +29,10 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/fonts/
 
+
+  fonts:
+    - family: SourceSans
+      fonts:
+        - asset: assets/fonts/SourceSansPro.ttf

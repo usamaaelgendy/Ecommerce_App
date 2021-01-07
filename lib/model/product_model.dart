@@ -1,5 +1,9 @@
+import 'package:ecommerce_app/helper/extenstion.dart';
+import 'package:flutter/cupertino.dart';
+
 class ProductModel {
-  String name, image, description, color, sized, price;
+  String name, image, description, sized, price;
+  Color color;
 
   ProductModel(
       {this.name,
@@ -17,7 +21,7 @@ class ProductModel {
     name = map['name'];
     image = map['image'];
     description = map['description'];
-    color = map['color'];
+    color = HexColor.fromHex(map['color']);
     sized = map['sized'];
     price = map['price'];
   }
